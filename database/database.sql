@@ -41,6 +41,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   `description` VARCHAR(200) NULL,
   `unit_price` INT NULL,
   `listed` TINYINT NULL,
+  `category` VARCHAR(45) NULL,
+  `size` VARCHAR(45) NULL,
   PRIMARY KEY (`idProduct`))
 ENGINE = InnoDB;
 
@@ -70,7 +72,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`command_line` (
   `idProduct` INT NOT NULL,
   `quantity` INT NULL,
   `line_price` INT NULL,
-  PRIMARY KEY (`idCommand`, `idProduct`),
+  `line_number` INT NOT NULL,
+  PRIMARY KEY (`idCommand`, `line_number`),
   INDEX `product_idx` (`idProduct` ASC) VISIBLE,
   CONSTRAINT `command`
     FOREIGN KEY (`idCommand`)
