@@ -69,10 +69,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`command_line` (
   `idCommand` INT NOT NULL,
+  `line_number` INT NOT NULL,
   `idProduct` INT NOT NULL,
   `quantity` INT NULL,
   `line_price` INT NULL,
-  `line_number` INT NOT NULL,
   PRIMARY KEY (`idCommand`, `line_number`),
   INDEX `product_idx` (`idProduct` ASC) VISIBLE,
   CONSTRAINT `command`
