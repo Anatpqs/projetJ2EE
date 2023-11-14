@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   `stock` INT NULL,
   `name` VARCHAR(45) NULL,
   `description` VARCHAR(200) NULL,
-  `unit_price` INT NULL,
+  `unit_price` FLOAT NULL,
   `listed` TINYINT NULL,
   `category` VARCHAR(45) NULL,
   PRIMARY KEY (`idProduct`))
