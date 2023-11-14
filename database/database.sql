@@ -19,14 +19,15 @@ USE `mydb` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`user` (
   `idUser` INT NOT NULL AUTO_INCREMENT,
-  `login` VARCHAR(45) NULL,
   `password` VARCHAR(45) NULL,
-  `admin` TINYINT NULL,
+  `admin` TINYINT NULL DEFAULT 0,
   `username` VARCHAR(45) NULL,
   `mail` VARCHAR(70) NULL,
-  `loyalty_point` INT NULL,
+  `loyalty_point` INT NULL DEFAULT 0,
   `address` VARCHAR(200) NULL,
-  `is_validate` TINYINT NULL,
+  `is_validate` TINYINT NULL DEFAULT 0,
+  `first_name` VARCHAR(45) NULL,
+  `last_name` VARCHAR(45) NULL,
   PRIMARY KEY (`idUser`))
 ENGINE = InnoDB;
 
@@ -42,7 +43,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   `unit_price` INT NULL,
   `listed` TINYINT NULL,
   `category` VARCHAR(45) NULL,
-  `size` VARCHAR(45) NULL,
   PRIMARY KEY (`idProduct`))
 ENGINE = InnoDB;
 
