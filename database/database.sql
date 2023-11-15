@@ -7,16 +7,14 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`user`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`user` ;
+
 CREATE TABLE IF NOT EXISTS `mydb`.`user` (
   `idUser` INT NOT NULL AUTO_INCREMENT,
   `password` VARCHAR(45) NULL,
@@ -33,8 +31,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `mydb`.`category`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`category` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`category` (
+  `idcategory` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`idcategory`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `mydb`.`product`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`product` ;
+
 CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   `idProduct` INT NOT NULL AUTO_INCREMENT,
   `stock` INT NULL,
@@ -42,14 +54,23 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   `description` VARCHAR(200) NULL,
   `unit_price` FLOAT NULL,
   `listed` TINYINT NULL,
-  `category` VARCHAR(45) NULL,
-  PRIMARY KEY (`idProduct`))
+  `idCategory` INT NULL,
+  `sexe` VARCHAR(45) NULL,
+  PRIMARY KEY (`idProduct`),
+  INDEX `category_idx` (`idCategory` ASC) VISIBLE,
+  CONSTRAINT `category`
+    FOREIGN KEY (`idCategory`)
+    REFERENCES `mydb`.`category` (`idcategory`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `mydb`.`command`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`command` ;
+
 CREATE TABLE IF NOT EXISTS `mydb`.`command` (
   `idCommand` INT NOT NULL AUTO_INCREMENT,
   `idUser` INT NULL,
@@ -67,6 +88,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`command_line`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`command_line` ;
+
 CREATE TABLE IF NOT EXISTS `mydb`.`command_line` (
   `idCommand` INT NOT NULL,
   `line_number` INT NOT NULL,
@@ -85,6 +108,25 @@ CREATE TABLE IF NOT EXISTS `mydb`.`command_line` (
     REFERENCES `mydb`.`product` (`idProduct`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`size`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`size` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`size` (
+  `idSize` VARCHAR(5) NOT NULL,
+  `idProduct` INT NOT NULL,
+  `stock` INT NULL,
+  PRIMARY KEY (`idSize`, `idProduct`),
+  INDEX `product_idx` (`idProduct` ASC) VISIBLE,
+  CONSTRAINT `product_size`
+    FOREIGN KEY (`idProduct`)
+    REFERENCES `mydb`.`product` (`idProduct`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
