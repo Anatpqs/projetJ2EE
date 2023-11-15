@@ -7,6 +7,10 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
@@ -49,13 +53,14 @@ DROP TABLE IF EXISTS `mydb`.`product` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`product` (
   `idProduct` INT NOT NULL AUTO_INCREMENT,
-  `stock` INT NULL,
   `name` VARCHAR(45) NULL,
   `description` VARCHAR(200) NULL,
   `unit_price` FLOAT NULL,
   `listed` TINYINT NULL,
   `idCategory` INT NULL,
   `sexe` VARCHAR(45) NULL,
+  `stock` INT NULL,
+  `size` VARCHAR(45) NULL,
   PRIMARY KEY (`idProduct`),
   INDEX `category_idx` (`idCategory` ASC) VISIBLE,
   CONSTRAINT `category`
@@ -108,25 +113,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`command_line` (
     REFERENCES `mydb`.`product` (`idProduct`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`size`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`size` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`size` (
-  `idSize` VARCHAR(5) NOT NULL,
-  `idProduct` INT NOT NULL,
-  `stock` INT NULL,
-  PRIMARY KEY (`idSize`, `idProduct`),
-  INDEX `product_idx` (`idProduct` ASC) VISIBLE,
-  CONSTRAINT `product_size`
-    FOREIGN KEY (`idProduct`)
-    REFERENCES `mydb`.`product` (`idProduct`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
