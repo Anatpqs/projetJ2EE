@@ -40,7 +40,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`category` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`category` (
-  `idcategory` INT NOT NULL,
+  `idcategory` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`idcategory`))
 ENGINE = InnoDB;
