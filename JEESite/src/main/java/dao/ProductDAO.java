@@ -4,6 +4,7 @@ import Entity.HibernateUtil;
 import Entity.Product;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -59,4 +60,16 @@ public class ProductDAO {
             e.printStackTrace();
         }
     }
+
+    public List<Product> getRandomProductsCategory(int n, String category) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String sqlQuery = "SELECT * FROM product WHERE category = '" + category + "' ORDER BY RAND() LIMIT " + n;
+            Query<Product> query = session.createNativeQuery(sqlQuery, Product.class);
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
+
