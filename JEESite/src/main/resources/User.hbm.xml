@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Entity.User" table="user" schema="mydb">
+        <id name="idUser" column="idUser"/>
+        <property name="password" column="password"/>
+        <property name="admin" column="admin"/>
+        <property name="username" column="username"/>
+        <property name="mail" column="mail"/>
+        <property name="loyaltyPoint" column="loyalty_point"/>
+        <property name="address" column="address"/>
+        <property name="isValidate" column="is_validate"/>
+        <property name="firstName" column="first_name"/>
+        <property name="lastName" column="last_name"/>
+    </class>
+</hibernate-mapping>
