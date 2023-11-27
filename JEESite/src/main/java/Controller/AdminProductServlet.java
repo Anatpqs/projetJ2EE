@@ -100,7 +100,7 @@ public class AdminProductServlet extends HttpServlet {
                 // Obtenez le nom d'origine du fichier
 
                 // Déterminez où vous souhaitez sauvegarder le fichier
-                String filePath = "C:\\Users\\CYTech Student\\IdeaProjects\\projetV2\\src\\main\\webapp\\images\\" + idProduct +".jpeg";
+                String filePath = "C:\\Users\\CYTech Student\\IdeaProjects\\projetV2\\src\\main\\webapp\\images\\" + idProduct +".jpg";
 
                 // Copiez le contenu du fichier vers l'emplacement souhaité
                 try (InputStream fileContent = filePart.getInputStream()) {
@@ -115,7 +115,7 @@ public class AdminProductServlet extends HttpServlet {
             int idProduct = Integer.parseInt(request.getParameter("IdProduct"));
 
             // Obtenez le chemin du fichier à supprimer
-            String filePath = "C:\\Users\\CYTech Student\\IdeaProjects\\projetV2\\src\\main\\webapp\\images\\" + idProduct + ".jpeg";
+            String filePath = "C:\\Users\\CYTech Student\\IdeaProjects\\projetV2\\src\\main\\webapp\\images\\" + idProduct + ".jpg";
 
             // Supprimez le fichier s'il existe
             File fileToDelete = new File(filePath);
