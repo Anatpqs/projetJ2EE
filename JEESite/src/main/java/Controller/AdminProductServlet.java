@@ -48,6 +48,7 @@ public class AdminProductServlet extends HttpServlet {
             String description = null;
             double unit_price = 0.0;
             int stock = 0;
+            int idCategory=0;
 
             // Obtenez les données du formulaire (y compris les champs de texte)
             Collection<Part> parts = request.getParts();
@@ -71,6 +72,8 @@ public class AdminProductServlet extends HttpServlet {
                             case "stock":
                                 stock = Integer.parseInt(paramValue);
                                 break;
+                            case "category":
+                                idCategory = Integer.parseInt(paramValue);
                             // Ajoutez d'autres champs du formulaire au besoin
                         }
                     }
@@ -82,6 +85,7 @@ public class AdminProductServlet extends HttpServlet {
             product.setDescription(description);
             product.setUnitPrice(unit_price);
             product.setStock(stock);
+            product.setIdCategory(idCategory);
             new ProductDAO().addProduct(product);
 
             Session session = HibernateUtil.getSessionFactory().openSession();
@@ -141,6 +145,10 @@ public class AdminProductServlet extends HttpServlet {
         List<Product> list_product= new ArrayList<Product>();
         list_product= new ProductDAO().getAllProducts();
         request.setAttribute("list_product",list_product);
+
+        List<Category> list_category= new ArrayList<Category>();
+        list_category=new CategoryDAO().getAllCategories();
+        request.setAttribute("list_category",list_category);
 
         String messageConfirm = (String) request.getAttribute("messageConfirm");
 
