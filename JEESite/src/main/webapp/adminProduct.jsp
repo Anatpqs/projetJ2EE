@@ -65,6 +65,15 @@
                     <input type="text" name="description" id="description">
                 </div>
                 <div class="input_add">
+                    <label for="category">Category</label>
+                    <select  name="category" id="category">
+                        <% List<Category> list_category = (List<Category>)request.getAttribute("list_category");
+                            for (Category category : list_category) {  %>
+                        <option value="<%=category.getIdcategory()%>"><%=category.getName()%></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="input_add">
                     <label for="unit_price">Unit price</label>
                     <input type="number" name="unit_price" id="unit_price">
                 </div>
