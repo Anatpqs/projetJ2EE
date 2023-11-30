@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Users</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<nav>
+    <button type="button" class="btn border-secondary m-2" onclick="buttonReturn()">Return</button>
+</nav>
+<body>
+<div class="container-fluid text-center">
+    <div><h1>Manage Categories</h1></div>
+    <div class="m-2">
+        <a class="h3" th:href="@{/admin/categories/add}">Add new Categories</a>
+    </div>
+
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Categories</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="categories  : ${listCategories}">
+                <tr>
+                    <td>[[${categories.id}]]</td>
+                    <td>[[${categories.name}]]</td>
+                    <td>
+                        <a class="h4 mr-3" th:href="@{'/admin/categories/edit/' + ${categories.id}}">Edit</a>
+                        <a class="h4" th:href="@{'/admin/categories/delete/' + ${categories.id}}">Delete</a>
+                    </td>
+                </tr>
+
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript">
+    function buttonReturn() {
+        window.location = "[[@{/admin}]]";
+    }
+</script>
+</html>
