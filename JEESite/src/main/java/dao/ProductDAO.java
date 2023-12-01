@@ -61,9 +61,34 @@ public class ProductDAO {
         }
     }
 
-    public List<Product> getRandomProductsCategory(int n, String category) {
+    public List<Product> getRandomProductsCategory(int n, int category) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String sqlQuery = "SELECT * FROM product WHERE category = '" + category + "' ORDER BY RAND() LIMIT " + n;
+            Query<Product> query = session.createNativeQuery(sqlQuery, Product.class);
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Product> getProductBySearch(String name, int categoryId) {
+        if (categoryId == 0){
+            return getProductByName(name);
+        }
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String sqlQuery = "SELECT * FROM product WHERE idCategory = '" + categoryId + "' AND name LIKE '%" + name + "%'";
+            Query<Product> query = session.createNativeQuery(sqlQuery, Product.class);
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Product> getProductByName(String name) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String sqlQuery = "SELECT * FROM product WHERE name LIKE '%" + name + "%'";
             Query<Product> query = session.createNativeQuery(sqlQuery, Product.class);
             return query.list();
         } catch (Exception e) {
