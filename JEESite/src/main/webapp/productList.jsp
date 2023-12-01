@@ -22,8 +22,8 @@
 
 <form class="flex flex-col md:flex-row gap-3 justify-center items-center" method="get" action="ProductListController">
     <div class="flex">
-        <input type="search" id="name" name="name" value="<%= request.getParameter("name")%>" placeholder="Search for a product..." class="w-full md:w-80 px-3 h-10 rounded-l border-2 border-sky-500 focus:outline-none focus:border-sky-500">
-        <button type="submit" class="bg-sky-500 text-white rounded-r px-2 md:px-3 py-0 md:py-1">Search</button>
+        <input type="search" id="name" name="name" value="<%= request.getParameter("name")%>" placeholder="Search for a product..." class="w-full md:w-80 px-3 h-10 rounded-l border-2 border-gray-800 focus:outline-none focus:border-sky-500">
+        <button type="submit" class="bg-gray-800 text-white rounded-r px-2 md:px-3 py-0 md:py-1">Search</button>
     </div>
     <select name="idCategory" id="idCategory">
         <option value="0" <% if (request.getParameter("idCategory").equals("0")){%> selected="selected"<%}%>>All</option>
