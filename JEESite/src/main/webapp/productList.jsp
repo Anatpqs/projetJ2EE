@@ -1,5 +1,7 @@
 <%@ page import="Entity.Product" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="Entity.Category" %>
+<%--
   Created by IntelliJ IDEA.
   User: CYTech Student
   Date: 24/11/2023
@@ -17,6 +19,22 @@
     <title>List</title>
 </head>
 <body>
+
+<form class="flex flex-col md:flex-row gap-3 justify-center items-center" method="get" action="ProductListController">
+    <div class="flex">
+        <input type="search" id="name" name="name" value="<%= request.getParameter("name")%>" placeholder="Search for a product..." class="w-full md:w-80 px-3 h-10 rounded-l border-2 border-sky-500 focus:outline-none focus:border-sky-500">
+        <button type="submit" class="bg-sky-500 text-white rounded-r px-2 md:px-3 py-0 md:py-1">Search</button>
+    </div>
+    <select name="idCategory" id="idCategory">
+        <option value="0" <% if (request.getParameter("idCategory").equals("0")){%> selected="selected"<%}%>>All</option>
+        <% List<Category> list_category = (List<Category>)request.getAttribute("list_category");
+            for (Category category : list_category) {  %>
+        <option value="<%=category.getIdcategory()%>" <% if (Integer.parseInt(request.getParameter("idCategory"))==category.getIdcategory()){%> selected="selected"<%}%>><%=category.getName()%></option>
+        <% } %>
+    </select>
+</form>
+
+
 
 <div class="bg-white">
     <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
