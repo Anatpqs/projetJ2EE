@@ -1,65 +1,24 @@
-package Controller;
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connexion</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-import java.io.IOException;
-import java.io.PrintWriter;
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-import Entity.HibernateUtil;
-import Entity.User;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-@WebServlet("/Connexion")
-public class Connexion extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        String username = request.getParameter("name");
-        String password = request.getParameter("password");
-
-
-        boolean isValidUser = validateUser(username, password);
-
-
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        if (isValidUser) {
-            response.sendRedirect("connexion_reussie.jsp");
-        } else {
-            response.sendRedirect("connexion_echouee.jsp");
-        }
-    }
-
-    private boolean validateUser(String username, String password) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-
-            String hql = "FROM User WHERE username = :username";
-            User user = session.createQuery(hql, User.class)
-                    .setParameter("username", username)
-                    .uniqueResult();
-
-            transaction.commit();
-
-            return user != null && user.getPassword().equals(password);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            System.err.println("Hibernate Exception: " + e.getMessage());
-            return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Unexpected Exception: " + e.getMessage());
-            return false;
-        }
-    }
-
-
-}
+</head>
+<body>
+<%@ include file="header.jsp" %>
+<div class="card">
+    <div class="card-body">
+        <div class="text-bg-danger p-3">
+        Connexion Echouée
+    </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
