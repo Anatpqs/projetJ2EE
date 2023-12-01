@@ -5,11 +5,13 @@ import java.io.PrintWriter;
 
 import Entity.HibernateUtil;
 import Entity.User;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -24,41 +26,35 @@ public class Connexion extends HttpServlet {
         String username = request.getParameter("name");
         String password = request.getParameter("password");
 
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
-        boolean isValidUser = validateUser(username, password);
+        String hql = "FROM User WHERE username = :username AND isValidate = 1";
+        User user = session.createQuery(hql, User.class)
+                .setParameter("username", username)
+                .uniqueResult();
 
+        transaction.commit();
+
+        boolean isValidUser = (user != null && user.getPassword().equals(password));
 
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
         if (isValidUser) {
-            response.sendRedirect("connexion_reussie.jsp");
+
+            Byte isAdmin = user.getAdmin();
+            HttpSession sessionUser = request.getSession();
+            sessionUser.setAttribute("isAdmin", isAdmin);
+            sessionUser.setAttribute("connected","ok");
+
+            response.sendRedirect("HomeController");
         } else {
-            response.sendRedirect("connexion_echouee.jsp");
+            request.setAttribute("msg_error", "Connexion échouée");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Connexion.jsp");
+            dispatcher.forward(request, response);
         }
-    }
 
-    private boolean validateUser(String username, String password) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-
-            String hql = "FROM User WHERE username = :username";
-            User user = session.createQuery(hql, User.class)
-                    .setParameter("username", username)
-                    .uniqueResult();
-
-            transaction.commit();
-
-            return user != null && user.getPassword().equals(password);
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            System.err.println("Hibernate Exception: " + e.getMessage());
-            return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Unexpected Exception: " + e.getMessage());
-            return false;
-        }
     }
 
 
