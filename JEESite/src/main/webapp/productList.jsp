@@ -12,7 +12,7 @@
 <%
     List<Product> list = (List<Product>) request.getAttribute("list");
 %>
-<script src="https://cdn.tailwindcss.com"></script>
+
 
 <html>
 <head>
@@ -42,7 +42,7 @@
 
         <div class="grid grid-cols-1 gap-x-6 gap-y-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             <% for (Product p : list){ %>
-            <a href="http://localhost:8080/JEESite_war_exploded/ProductController?idProduct=<%=p.getIdProduct()%>" class="group">
+            <a href="ProductController?idProduct=<%=p.getIdProduct()%>" class="group">
                 <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                     <img src="images/<%=p.getIdProduct()%>.jpg" alt="." class="h-full w-full object-cover object-center group-hover:opacity-75">
                 </div>
@@ -53,6 +53,6 @@
         </div>
     </div>
 </div>
-
+<script src="https://cdn.tailwindcss.com"></script>
 </body>
 </html>
