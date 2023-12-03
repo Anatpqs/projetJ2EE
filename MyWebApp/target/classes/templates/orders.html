@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Orders</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<nav>
+    <button type="button" class="btn border-secondary m-2" onclick="buttonReturn()">Return</button>
+</nav>
+<body>
+<div class="container-fluid">
+    <h2>Orders</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>User</th>
+            <!-- Add other columns as needed -->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.user.getLastName()}"></td>
+            <!-- Add other columns as needed -->
+            <td>
+                <table>
+                    <tr th:each="orderProduct : ${order.orderProducts}">
+                        <td th:text="${orderProduct.product.name}"></td>
+                        <td th:text="${orderProduct.quantity}"></td>
+                        <!-- Add other columns as needed -->
+                    </tr>
+                </table>
+                <form th:action="@{/admin/removeOrder}" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.id}" />
+                    <button type="submit">Remove</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+    function buttonReturn() {
+        window.location = "[[@{/admin}]]";
+    }
+</script>
+</html>
