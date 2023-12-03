@@ -42,7 +42,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="Connexion.jsp">Sign in </a>
             </li>
-            <% } %>
+             <% }else { %>
+            <li class="nav-item">
+                <a class="nav-link" href="Disconnect">Log out</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Basket</a>
+            </li>
+            <%}%>
             <% if(isAdmin!=null && isAdmin==1){%>
             <li class="nav-item">
                 <a class="nav-link" href="admin.jsp">Admin</a>
