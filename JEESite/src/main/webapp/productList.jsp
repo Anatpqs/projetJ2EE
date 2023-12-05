@@ -19,8 +19,8 @@
     <title>List</title>
 </head>
 <body>
-
-<form class="flex flex-col md:flex-row gap-3 justify-center items-center" method="get" action="ProductListController">
+<%@ include file="header2.jsp" %>
+<form class="flex flex-col mt-5 md:flex-row gap-3 justify-center items-center" method="get" action="ProductListController">
     <div class="flex">
         <input type="search" id="name" name="name" value="<%= request.getParameter("name")%>" placeholder="Search for a product..." class="w-full md:w-80 px-3 h-10 rounded-l border-2 border-gray-800 focus:outline-none focus:border-sky-500">
         <button type="submit" class="bg-gray-800 text-white rounded-r px-2 md:px-3 py-0 md:py-1">Search</button>

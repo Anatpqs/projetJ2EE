@@ -1,200 +1,175 @@
 <%@ page import="Entity.Product" %>
-<%@ page import="java.util.*" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="Entity.Category" %><%--
   Created by IntelliJ IDEA.
   User: CYTech Student
-  Date: 09/11/2023
-  Time: 13:42
+  Date: 01/12/2023
+  Time: 17:34
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="header.jsp"%>
-
 <%
-    List<Product> listM = (List<Product>) request.getAttribute("listM");
-    List<Product> listW = (List<Product>) request.getAttribute("listW");
-    List<Product> listK = (List<Product>) request.getAttribute("listK");
-    int n1 = listM.size();
-    int n2 = listW.size();
-    int n3 = listK.size();
+    List<Product> list1 = (List<Product>) request.getAttribute("list1");
+    List<Product> list2 = (List<Product>) request.getAttribute("list2");
+    List<Product> list3 = (List<Product>) request.getAttribute("list3");
+    int n1 = list1.size();
+    int n2 = list2.size();
+    int n3 = list3.size();
 %>
-
-<style>
-    .custom-image {
-        height: 400px; /* Ajustez la hauteur selon vos besoins */
-        object-fit: cover; /* Assurez-vous que l'image couvre complètement le conteneur */
-    }
-    .custom-indicators li {
-        background-color: black !important;
-    }
-    .custom-control {
-        color: black !important;
-        font-size: 30px !important;
-    }
-</style>
 <html>
 <head>
     <title>Home</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
 </head>
 <body>
+<%@ include file="header2.jsp" %>
+<form class="flex flex-col mt-5 md:flex-row gap-3 justify-center items-center" method="get" action="ProductListController">
+    <div class="flex">
+        <input type="search" id="name" name="name" placeholder="Search for a product..." class="w-full md:w-80 px-3 h-10 rounded-l border-2 border-gray-800 focus:outline-none focus:border-sky-500">
+        <button type="submit" class="bg-gray-800 text-white rounded-r px-2 md:px-3 py-0 md:py-1">Search</button>
+    </div>
+    <select name="idCategory" id="idCategory">
+        <option value="0"  selected="selected">All</option>
+        <% List<Category> list_category = (List<Category>)request.getAttribute("list_category");
+            for (Category category : list_category) {  %>
+        <option value="<%=category.getIdcategory()%>"><%=category.getName()%></option>
+        <% } %>
+    </select>
+</form>
 
-<div class="jumbotron">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <h2 class="text-center">Men</h2>
-                <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 530px;">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators custom-indicators">
-                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                        <%
-                            for(int i = 1;i<n1;i++){
-                        %>
-                        <li data-target="#myCarousel" data-slide-to=<%= i %>></li>
-                        <% } %>
-                    </ol>
-
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner" >
-                        <%
-                            for(int i=0;i<n1;i++){
-                                Product p = listM.get(i);
-                        %>
-                        <div class="item <%if(i==0){%>active<%}%>">
-                            <div class="card w-100 ">
-                                <img src="images/<%=p.getIdProduct()%>.jpg" class="card-img-top img-fluid custom-image" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%=p.getName()%></h5>
-                                    <p class="card-text"><%=p.getUnitPrice()%>€</p>
-                                    <form action="http://localhost:8080/JEESite_war_exploded/ProductController" method="get">
-                                        <input type="hidden" name="idProduct" value="<%=p.getIdProduct()%>">
-                                        <input type="submit" class="btn btn-dark" value="Buy">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <%
-                            }
-                        %>
+<div class="flex mt-20">
+    <div class="carousel-container mx-auto ">
+        <% int idCategory1 = list1.get(0).getIdCategory(); %>
+        <a href="ProductListController?idCategory=<%=idCategory1%>&name=">
+            <h2 class="text-2xl font-bold mb-4 text-center"><%= list_category.get(idCategory1-1).getName() %></h2>
+        </a>
+        <div id="default-carousel1" class="relative w-96 h-50" data-carousel="slide">
+            <!-- Carousel wrapper -->
+            <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                <% for (Product p : list1){%>
+                <a href="ProductController?idProduct=<%=p.getIdProduct()%>">
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="images/<%= p.getIdProduct() %>.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                     </div>
-
-                    <!-- Left and right controls -->
-                    <a class="carousel-control-prev custom-control" href="#myCarousel" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next custom-control" href="#myCarousel" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
+                </a>
+                <%}%>
             </div>
+            <!-- Slider indicators -->
+            <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="true"  data-carousel-slide-to="0"></button>
+                <% for (int i=1;i<n1;i++){%>
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="false"  data-carousel-slide-to="<%= i %>"></button>
+                <% } %>
+            </div>
+            <!-- Slider controls -->
+            <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+            </svg>
+            <span class="sr-only">Previous</span>
+        </span>
+            </button>
+            <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+            </svg>
+            <span class="sr-only">Next</span>
+        </span>
+            </button>
+        </div>
+    </div>
 
-            <div class="col-md-4">
-                <h2 class="text-center">Women</h2>
-                <div id="myCarousel2" class="carousel slide" data-ride="carousel" style="height: 530px;">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators custom-indicators">
-                        <li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
-                        <%
-                            for(int i = 1;i<n2;i++){
-                        %>
-                        <li data-target="#myCarousel2" data-slide-to=<%= i %>></li>
-                        <% } %>
-                    </ol>
-
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner" >
-                        <%
-                            for(int i=0;i<n2;i++){
-                                Product p = listW.get(i);
-                        %>
-                        <div class="item <%if(i==0){%>active<%}%>">
-                            <div class="card w-100 ">
-                                <img src="images/<%=p.getIdProduct()%>.jpg" class="card-img-top img-fluid custom-image" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%=p.getName()%></h5>
-                                    <p class="card-text"><%=p.getUnitPrice()%>€</p>
-                                    <form action="http://localhost:8080/JEESite_war_exploded/ProductController" method="get">
-                                        <input type="hidden" name="idProduct" value="<%=p.getIdProduct()%>">
-                                        <input type="submit" class="btn btn-dark" value="Buy">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <%
-                            }
-                        %>
+    <div class="carousel-container mx-auto">
+        <% int idCategory2 = list2.get(0).getIdCategory(); %>
+        <a href="ProductListController?idCategory=<%=idCategory2%>&name=">
+            <h2 class="text-2xl font-bold mb-4 text-center"><%= list_category.get(idCategory2-1).getName() %></h2>
+        </a>
+        <div id="default-carousel2" class="relative w-96 h-50" data-carousel="slide">
+            <!-- Carousel wrapper -->
+            <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                <% for (Product p : list2){%>
+                <a href="ProductController?idProduct=<%=p.getIdProduct()%>">
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="images/<%= p.getIdProduct() %>.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                     </div>
-
-                    <!-- Left and right controls -->
-                    <a class="carousel-control-prev custom-control" href="#myCarousel2" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next custom-control" href="#myCarousel2" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
+                </a>
+                <%}%>
             </div>
+            <!-- Slider indicators -->
+            <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="true"  data-carousel-slide-to="0"></button>
+                <% for (int i=1;i<n2;i++){%>
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="false"  data-carousel-slide-to="<%= i %>"></button>
+                <% } %>
+            </div>
+            <!-- Slider controls -->
+            <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+            </svg>
+            <span class="sr-only">Previous</span>
+        </span>
+            </button>
+            <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+            </svg>
+            <span class="sr-only">Next</span>
+        </span>
+            </button>
+        </div>
+    </div>
 
-            <div class="col-md-4">
-                <h2 class="text-center">Kids</h2>
-                <div id="myCarousel3" class="carousel slide" data-ride="carousel" style="height: 530px;">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators custom-indicators">
-                        <li data-target="#myCarousel3" data-slide-to="0" class="active"></li>
-                        <%
-                            for(int i = 1;i<n3;i++){
-                        %>
-                        <li data-target="#myCarousel3" data-slide-to=<%= i %>></li>
-                        <% } %>
-                    </ol>
-
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner" >
-                        <%
-                            for(int i=0;i<n3;i++){
-                                Product p = listK.get(i);
-                        %>
-                        <div class="item <%if(i==0){%>active<%}%>">
-                            <div class="card w-100 ">
-                                <img src="images/<%=p.getIdProduct()%>.jpg" class="card-img-top img-fluid custom-image" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%=p.getName()%></h5>
-                                    <p class="card-text"><%=p.getUnitPrice()%>€</p>
-                                    <form action="http://localhost:8080/JEESite_war_exploded/ProductController" method="get">
-                                        <input type="hidden" name="idProduct" value="<%=p.getIdProduct()%>">
-                                        <input type="submit" class="btn btn-dark" value="Buy">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <%
-                            }
-                        %>
+    <div class="carousel-container mx-auto">
+        <% int idCategory3 = list3.get(0).getIdCategory(); %>
+        <a href="ProductListController?idCategory=<%=idCategory3%>&name=">
+            <h2 class="text-2xl font-bold mb-4 text-center"><%= list_category.get(idCategory3-1).getName() %></h2>
+        </a>
+        <div id="default-carousel3" class="relative w-96 h-50" data-carousel="slide">
+            <!-- Carousel wrapper -->
+            <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                <% for (Product p : list3){%>
+                <a href="ProductController?idProduct=<%=p.getIdProduct()%>">
+                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                        <img src="images/<%= p.getIdProduct() %>.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                     </div>
-
-                    <!-- Left and right controls -->
-                    <a class="carousel-control-prev custom-control" href="#myCarousel3" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next custom-control" href="#myCarousel3" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
+                </a>
+                <%}%>
             </div>
-
+            <!-- Slider indicators -->
+            <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="true"  data-carousel-slide-to="0"></button>
+                <% for (int i=1;i<n3;i++){%>
+                <button type="button" class="w-3 h-3 rounded-full" aria-current="false"  data-carousel-slide-to="<%= i %>"></button>
+                <% } %>
+            </div>
+            <!-- Slider controls -->
+            <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+            </svg>
+            <span class="sr-only">Previous</span>
+        </span>
+            </button>
+            <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+            </svg>
+            <span class="sr-only">Next</span>
+        </span>
+            </button>
         </div>
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 </body>
+
 </html>
