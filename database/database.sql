@@ -20,18 +20,18 @@ USE `mydb` ;
 DROP TABLE IF EXISTS `mydb`.`user` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`user` (
-  `idUser` INT NOT NULL AUTO_INCREMENT,
-  `password` VARCHAR(45) NULL,
-  `admin` TINYINT NULL DEFAULT 0,
-  `username` VARCHAR(45) NULL,
-  `mail` VARCHAR(70) NULL,
-  `loyalty_point` INT NULL DEFAULT 0,
-  `address` VARCHAR(200) NULL,
-  `is_validate` TINYINT NULL DEFAULT 0,
-  `first_name` VARCHAR(45) NULL,
-  `last_name` VARCHAR(45) NULL,
-  PRIMARY KEY (`idUser`))
-ENGINE = InnoDB;
+                                             `idUser` INT NOT NULL AUTO_INCREMENT,
+                                             `password` VARCHAR(45) NULL,
+                                             `admin` TINYINT NULL DEFAULT 0,
+                                             `username` VARCHAR(45) NULL,
+                                             `mail` VARCHAR(70) NULL,
+                                             `loyalty_point` INT NULL DEFAULT 0,
+                                             `address` VARCHAR(200) NULL,
+                                             `is_validate` TINYINT NULL DEFAULT 0,
+                                             `first_name` VARCHAR(45) NULL,
+                                             `last_name` VARCHAR(45) NULL,
+                                             PRIMARY KEY (`idUser`))
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -40,10 +40,10 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`category` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`category` (
-  `idcategory` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
-  PRIMARY KEY (`idcategory`))
-ENGINE = InnoDB;
+                                                 `idcategory` INT NOT NULL AUTO_INCREMENT,
+                                                 `name` VARCHAR(45) NULL,
+                                                 PRIMARY KEY (`idcategory`))
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -52,23 +52,23 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`product` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`product` (
-  `idProduct` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
-  `description` VARCHAR(200) NULL,
-  `unit_price` FLOAT NULL,
-  `listed` TINYINT NULL,
-  `idCategory` INT NULL,
-  `sexe` VARCHAR(45) NULL,
-  `stock` INT NULL,
-  `size` VARCHAR(45) NULL,
-  PRIMARY KEY (`idProduct`),
-  INDEX `category_idx` (`idCategory` ASC) VISIBLE,
-  CONSTRAINT `category`
-    FOREIGN KEY (`idCategory`)
-    REFERENCES `mydb`.`category` (`idcategory`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+                                                `idProduct` INT NOT NULL AUTO_INCREMENT,
+                                                `name` VARCHAR(45) NULL,
+                                                `description` VARCHAR(200) NULL,
+                                                `unit_price` FLOAT NULL,
+                                                `listed` TINYINT NULL,
+                                                `idCategory` INT NULL,
+                                                `sexe` VARCHAR(45) NULL,
+                                                `stock` INT NULL,
+                                                `size` VARCHAR(45) NULL,
+                                                PRIMARY KEY (`idProduct`),
+                                                INDEX `category_idx` (`idCategory` ASC) VISIBLE,
+                                                CONSTRAINT `category`
+                                                    FOREIGN KEY (`idCategory`)
+                                                        REFERENCES `mydb`.`category` (`idcategory`)
+                                                        ON DELETE NO ACTION
+                                                        ON UPDATE NO ACTION)
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -77,17 +77,17 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`command` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`command` (
-  `idCommand` INT NOT NULL AUTO_INCREMENT,
-  `idUser` INT NULL,
-  `date` DATE NULL,
-  PRIMARY KEY (`idCommand`),
-  INDEX `user_idx` (`idUser` ASC) VISIBLE,
-  CONSTRAINT `user`
-    FOREIGN KEY (`idUser`)
-    REFERENCES `mydb`.`user` (`idUser`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+                                                `idCommand` INT NOT NULL AUTO_INCREMENT,
+                                                `idUser` INT NULL,
+                                                `date` DATE NULL,
+                                                PRIMARY KEY (`idCommand`),
+                                                INDEX `user_idx` (`idUser` ASC) VISIBLE,
+                                                CONSTRAINT `user`
+                                                    FOREIGN KEY (`idUser`)
+                                                        REFERENCES `mydb`.`user` (`idUser`)
+                                                        ON DELETE NO ACTION
+                                                        ON UPDATE NO ACTION)
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -96,25 +96,46 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`command_line` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`command_line` (
-  `idCommand` INT NOT NULL,
-  `line_number` INT NOT NULL,
-  `idProduct` INT NOT NULL,
-  `quantity` INT NULL,
-  `line_price` INT NULL,
-  PRIMARY KEY (`idCommand`, `line_number`),
-  INDEX `product_idx` (`idProduct` ASC) VISIBLE,
-  CONSTRAINT `command`
-    FOREIGN KEY (`idCommand`)
-    REFERENCES `mydb`.`command` (`idCommand`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `product`
-    FOREIGN KEY (`idProduct`)
-    REFERENCES `mydb`.`product` (`idProduct`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+                                                     `idCommand` INT NOT NULL,
+                                                     `line_number` INT NOT NULL,
+                                                     `idProduct` INT NOT NULL,
+                                                     `quantity` INT NULL,
+                                                     `line_price` INT NULL,
+                                                     PRIMARY KEY (`idCommand`, `line_number`),
+                                                     INDEX `product_idx` (`idProduct` ASC) VISIBLE,
+                                                     CONSTRAINT `command`
+                                                         FOREIGN KEY (`idCommand`)
+                                                             REFERENCES `mydb`.`command` (`idCommand`)
+                                                             ON DELETE CASCADE
+                                                             ON UPDATE CASCADE,
+                                                     CONSTRAINT `product`
+                                                         FOREIGN KEY (`idProduct`)
+                                                             REFERENCES `mydb`.`product` (`idProduct`)
+                                                             ON DELETE NO ACTION
+                                                             ON UPDATE NO ACTION)
+    ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `mydb`.`Basket`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`Basket` ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`Basket` (
+                                               `idProduct` INT NOT NULL,
+                                               `idUser` INT NOT NULL,
+                                               `quantity` INT NOT NULL,
+                                               PRIMARY KEY(`idUser`),
+                                               CONSTRAINT `user_basket`
+                                                   FOREIGN KEY (`idUser`)
+                                                       REFERENCES `mydb`.`user` (`idUser`)
+                                                       ON DELETE CASCADE
+                                                       ON UPDATE CASCADE,
+                                               CONSTRAINT `product_basket`
+                                                   FOREIGN KEY (`idProduct`)
+                                                       REFERENCES `mydb`.`product` (`idProduct`)
+                                                       ON DELETE CASCADE
+                                                       ON UPDATE CASCADE)
+    ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
