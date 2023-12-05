@@ -1,6 +1,7 @@
 <%@ page import="Entity.Product" %>
 <%@ page import="java.util.List" %>
-<%@ page import="Entity.Category" %><%--
+<%@ page import="Entity.Category" %>
+<%@ page import="dao.CategoryDAO" %><%--
   Created by IntelliJ IDEA.
   User: CYTech Student
   Date: 01/12/2023
@@ -41,7 +42,7 @@
     <div class="carousel-container mx-auto ">
         <% int idCategory1 = list1.get(0).getIdCategory(); %>
         <a href="ProductListController?idCategory=<%=idCategory1%>&name=">
-            <h2 class="text-2xl font-bold mb-4 text-center"><%= list_category.get(idCategory1-1).getName() %></h2>
+            <h2 class="text-2xl font-bold mb-4 text-center"><%= new CategoryDAO().getCategoryById(idCategory1).getName()%></h2>
         </a>
         <div id="default-carousel1" class="relative w-96 h-50" data-carousel="slide">
             <!-- Carousel wrapper -->
@@ -84,7 +85,7 @@
     <div class="carousel-container mx-auto">
         <% int idCategory2 = list2.get(0).getIdCategory(); %>
         <a href="ProductListController?idCategory=<%=idCategory2%>&name=">
-            <h2 class="text-2xl font-bold mb-4 text-center"><%= list_category.get(idCategory2-1).getName() %></h2>
+            <h2 class="text-2xl font-bold mb-4 text-center"><%= new CategoryDAO().getCategoryById(idCategory2).getName() %></h2>
         </a>
         <div id="default-carousel2" class="relative w-96 h-50" data-carousel="slide">
             <!-- Carousel wrapper -->
@@ -127,7 +128,7 @@
     <div class="carousel-container mx-auto">
         <% int idCategory3 = list3.get(0).getIdCategory(); %>
         <a href="ProductListController?idCategory=<%=idCategory3%>&name=">
-            <h2 class="text-2xl font-bold mb-4 text-center"><%= list_category.get(idCategory3-1).getName() %></h2>
+            <h2 class="text-2xl font-bold mb-4 text-center"><%= new CategoryDAO().getCategoryById(idCategory3).getName() %></h2>
         </a>
         <div id="default-carousel3" class="relative w-96 h-50" data-carousel="slide">
             <!-- Carousel wrapper -->
