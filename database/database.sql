@@ -140,3 +140,19 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Basket` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+/*----------------------------------*/n
+INSERT INTO  user(password,admin,username,is_validate)
+VALUES('user',0,'user',1),
+      ('admin',1,'admin',1);
+
+INSERT INTO category(idcategory, name)
+VALUES(1,'Men'),(2,'Women'),(3,'Kids');
+
+INSERT INTO product(idProduct, name, description, unit_price, idCategory)
+VALUES (1,'Tshirt noir','Tshirt noir',15.99,1),
+       (2,'Tshirt blanc','Tshirt blanc',15.99,2),
+       (3,'Tshirt fortnite','Tshirt fortnite',12.99,3),
+       (4,'Tshirt minecraft','Tshirt minecraft',12.99,3),
+       (5,'Tshirt Yummi', 'Tshirt Yummi',15.99,2),
+       (6,'Tshirt Sigma','Tshirt Sigma',15.99,1);
