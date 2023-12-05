@@ -30,6 +30,6 @@ public class BasketController extends HttpServlet {
         basketDAO.addToBasket(currentUser, product, 1);
 
 
-        response.sendRedirect("productDetails.jsp?productId=" + productId);
+        response.sendRedirect("productPage.jsp?productId=" + productId);
     }
 }
