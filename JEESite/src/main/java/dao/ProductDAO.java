@@ -61,9 +61,19 @@ public class ProductDAO {
         }
     }
 
+    public List<Integer> getRandomCategory(int n) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String sqlQuery = "SELECT DISTINCT idCategory FROM product GROUP BY idCategory HAVING count(*) > 1 ORDER BY RAND() LIMIT " + n;
+            Query<Integer> query = session.createNativeQuery(sqlQuery, Integer.class);
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public List<Product> getRandomProductsCategory(int n, int category) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String sqlQuery = "SELECT * FROM product WHERE category = '" + category + "' ORDER BY RAND() LIMIT " + n;
+            String sqlQuery = "SELECT * FROM product WHERE idCategory = '" + category + "' ORDER BY RAND() LIMIT " + n;
             Query<Product> query = session.createNativeQuery(sqlQuery, Product.class);
             return query.list();
         } catch (Exception e) {
