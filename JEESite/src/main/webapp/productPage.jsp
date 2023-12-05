@@ -1,14 +1,12 @@
 <%@ page import="Entity.Product" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: CYTech Student
-  Date: 16/11/2023
-  Time: 14:55
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="Entity.*" %>
+<%@ page import="java.util.List" %>
+<%@ page import="dao.BasketDAO" %>
+<%@ page import="dao.UserDAO" %>
+
 <%
     Product product = (Product) request.getAttribute("product");
+    User currentUser = (User) request.getSession().getAttribute("user");
 %>
 <script src="https://cdn.tailwindcss.com"></script>
 <html>
@@ -16,7 +14,7 @@
     <title><%= product.getName( ) %></title>
 </head>
 <body>
-
+<%@ include file="header2.jsp" %>
 <div class="bg-white">
     <div class="pt-6">
 
@@ -39,21 +37,20 @@
                 <p class="text-3xl tracking-tight text-gray-900"><%= product.getUnitPrice() %> €</p>
 
 
-                <form class="mt-10">
-                    <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-700 px-8 py-3 text-base font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">Add to bag</button>
+                <form method="post" action="BasketController">
+                    <input type="hidden" name="productId" value="<%= product.getIdProduct() %>">
+                    <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-700 px-8 py-3 text-base font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">Add to Bag</button>
                 </form>
             </div>
 
             <div class="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
-                <!-- Description and details -->
+
                 <div>
                     <h3 class="sr-only">Description</h3>
-
                     <div class="space-y-6">
                         <p class="text-base text-gray-900"><%= product.getDescription() %></p>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
