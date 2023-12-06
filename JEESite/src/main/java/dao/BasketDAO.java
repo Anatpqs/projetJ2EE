@@ -3,6 +3,10 @@ package dao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import Entity.*;
+import org.hibernate.query.Query;
+
+import java.util.List;
+
 public class BasketDAO {
 
     public void addToBasket(Basket basket) {
@@ -25,17 +29,30 @@ public class BasketDAO {
         }
     }
 
-    public void deleteBasket(int IdUser) {
+    public List<Basket> getBasketsByUserId(int userId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-            Basket basket = session.get(Basket.class, IdUser);
-            if (basket != null) {
-                session.delete(basket);
-            }
-            transaction.commit();
+            String hql = "FROM Basket b WHERE b.idUser = :userId";
+            Query<Basket> query = session.createQuery(hql, Basket.class);
+            query.setParameter("userId", userId);
+            return query.list();
         } catch (Exception e) {
+            // Gérer les exceptions (log, throw, etc.) selon les besoins de votre application
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void RemoveBasketsByUserId(int userId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "DELETE FROM Basket b WHERE b.idUser = :userId";
+            Query<Basket> query = session.createQuery(hql, Basket.class);
+            query.setParameter("userId", userId);
+            query.executeUpdate();
+        } catch (Exception e) {
+            // Gérer les exceptions (log, throw, etc.) selon les besoins de votre application
             e.printStackTrace();
         }
     }
+
 
 }
