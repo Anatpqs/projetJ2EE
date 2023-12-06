@@ -124,7 +124,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Basket` (
                                                `idProduct` INT NOT NULL,
                                                `idUser` INT NOT NULL,
                                                `quantity` INT NOT NULL,
-                                               PRIMARY KEY(`idUser`),
+                                                `idBasket` INT NOT NULL AUTO_INCREMENT,
+                                               PRIMARY KEY(`idBasket`),
                                                CONSTRAINT `user_basket`
                                                    FOREIGN KEY (`idUser`)
                                                        REFERENCES `mydb`.`user` (`idUser`)
@@ -141,7 +142,7 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-/*----------------------------------*/n
+/*----------------------------------*/
 INSERT INTO  user(password,admin,username,is_validate)
 VALUES('user',0,'user',1),
       ('admin',1,'admin',1);
