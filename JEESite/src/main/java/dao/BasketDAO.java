@@ -5,28 +5,13 @@ import org.hibernate.Transaction;
 import Entity.*;
 public class BasketDAO {
 
-    public void addToBasket(User user, Product product, int quantity) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-
-        try {
-            transaction = session.beginTransaction();
-
-            Basket basketItem = new Basket();
-            basketItem.setIdUser(user.getIdUser());
-            basketItem.setIdProduct(product.getIdProduct());
-            basketItem.setQuantity(quantity);
-
-            session.save(basketItem);
-
+    public void addToBasket(Basket basket) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(basket);
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
