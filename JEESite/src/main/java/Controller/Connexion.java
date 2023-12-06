@@ -47,6 +47,7 @@ public class Connexion extends HttpServlet {
             HttpSession sessionUser = request.getSession();
             sessionUser.setAttribute("isAdmin", isAdmin);
             sessionUser.setAttribute("connected","ok");
+            sessionUser.setAttribute("user",user);
 
             response.sendRedirect("HomeController");
         } else {
