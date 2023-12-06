@@ -15,32 +15,26 @@ public class BasketDAO {
         }
     }
 
-    public void removeFromBasket(User user, Product product) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-        int idUser = user.getIdUser();
-        int idProduct= product.getIdProduct();
-
-
-        try {
-            transaction = session.beginTransaction();
-            Basket basketItem = (Basket) session.createQuery(
-                            "FROM Basket WHERE idUser = :idUser AND idProduct = :idProduct")
-                    .setParameter("idUser", idUser)
-                    .setParameter("idProduct", idProduct)
-                    .uniqueResult();
-            if (basketItem != null) {
-                session.delete(basketItem);
-            }
-
+    public void updateBasket(Basket basket) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.update(basket);
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
-        } finally {
-            session.close();
+        }
+    }
+
+    public void deleteBasket(int IdUser) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Basket basket = session.get(Basket.class, IdUser);
+            if (basket != null) {
+                session.delete(basket);
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
