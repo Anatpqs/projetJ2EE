@@ -47,7 +47,7 @@
                 <a class="nav-link" href="Disconnect">Log out</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Basket</a>
+                <a class="nav-link" href="Basket.jsp">Basket</a>
             </li>
             <%}%>
             <% if(isAdmin!=null && isAdmin==1){%>
