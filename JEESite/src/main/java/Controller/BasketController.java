@@ -27,8 +27,11 @@ public class BasketController extends HttpServlet {
 
 
         BasketDAO basketDAO = new BasketDAO();
-        basketDAO.addToBasket(currentUser, product, 1);
-
+        Basket basket = new Basket();
+        basket.setIdUser(currentUser.getIdUser());
+        basket.setIdProduct(productId);
+        basket.setQuantity(1);
+        basketDAO.addToBasket(basket);
 
         response.sendRedirect("ProductController?idProduct=" + productId);
     }
