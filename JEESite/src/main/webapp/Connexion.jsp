@@ -42,10 +42,6 @@
     <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
     <div id="passwordHelp" class="form-text">Neither with your password.</div>
   </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Remember me</label>
-  </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <span class="msg text-danger">${msg_error!=null ? msg_error : ""}</span>
