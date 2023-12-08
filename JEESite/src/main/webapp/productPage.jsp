@@ -1,5 +1,5 @@
 <%@ page import="Entity.Product" %>
-<%@ page import="Entity.*" %>
+<%@ page import="Entity.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="dao.BasketDAO" %>
 <%@ page import="dao.UserDAO" %>
