@@ -24,7 +24,8 @@ import java.util.List;
 @WebServlet("/paymentServlet")
 public class paymentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int idUser = Integer.parseInt(request.getParameter("idUser"));
+        HttpSession sessionUser = request.getSession();
+        int idUser = ((User) sessionUser.getAttribute("user")).getIdUser();
 
         String mail_user = new UserDAO().getUserById(idUser).getMail();
         EmailTest email = new EmailTest();
