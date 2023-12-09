@@ -28,7 +28,7 @@
         if (user != null) {
             try (Session hibernateSession = HibernateUtil.getSessionFactory().openSession()) {
 
-                String hql = "SELECT b.idProduct, b.quantity, p.unitPrice, p.name, p.description " +
+                String hql = "SELECT b.idProduct, b.quantity, p.unitPrice, p.name, p.description, b.idBasket " +
                         "FROM Basket b " +
                         "JOIN Product p ON b.idProduct = p.idProduct " +
                         "WHERE b.idUser = :userId";
@@ -68,7 +68,7 @@
             <td><%= row[4] %></td>
             <td>
                 <form method="post" action="updateQuantityServlet">
-                    <input type="hidden" name="productId" value="<%= row[0] %>">
+                    <input type="hidden" name="basketId" value="<%= row[5] %>">
                     <input class="quantity-input" type="number" name="quantity" value="<%= row[1] %>">
                     <button type="submit" name="action" value="increment">+</button>
                     <button type="submit" name="action" value="decrement">-</button>
