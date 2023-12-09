@@ -20,7 +20,7 @@
 
 <nav class="bg-gray-100 border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-start p-4">
-        <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="HomeController" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="images/logo.PNG" class="h-8" alt="Logo" />
         </a>
         <div class="hidden w-full ml-10 md:block md:w-auto" id="navbar-default">
