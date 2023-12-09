@@ -1,5 +1,6 @@
 package Controller;
 
+import dao.BasketDAO;
 import dao.CategoryDAO;
 import dao.ProductDAO;
 import jakarta.servlet.RequestDispatcher;
@@ -29,50 +30,25 @@ public class updateQuantityServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        int productId = Integer.parseInt(request.getParameter("productId"));
-        int newQuantity;
+        int basketId = Integer.parseInt(request.getParameter("basketId"));
+        int newQuantity=0;
+        BasketDAO basketDAO = new BasketDAO();
+        Basket basket = basketDAO.getBasketById(basketId);
 
         if ("increment".equals(action)) {
-            newQuantity = getCurrentQuantity(request) + 1;
-            System.out.println("eroeorj");
+            newQuantity = basket.getQuantity() + 1;
         } else if ("decrement".equals(action)) {
-            newQuantity = getCurrentQuantity(request) - 1;
+            newQuantity = basket.getQuantity() - 1;
+        }
+
+        if (newQuantity > 0) {
+            basket.setQuantity(newQuantity);
         } else {
-
-            return;
+            basketDAO.RemoveBasketsById(basket.getIdBasket());
         }
 
-
-        updateQuantityInDatabase(productId, newQuantity);
-
-
+        basketDAO.updateBasket(basket);
         response.sendRedirect(request.getContextPath() + "/Basket.jsp");
-    }
-
-    private int getCurrentQuantity(HttpServletRequest request) {
-        String quantityParam = request.getParameter("quantity");
-        return Integer.parseInt(quantityParam);
-    }
-
-    private void updateQuantityInDatabase(int productId, int newQuantity) {
-        try (Session hibernateSession = HibernateUtil.getSessionFactory().openSession()) {
-            List<Basket> basketItems = hibernateSession.createQuery("FROM Basket WHERE idProduct = :productId", Basket.class)
-                    .setParameter("productId", productId)
-                    .list();
-
-            if (!basketItems.isEmpty()) {
-                Basket basketItem = basketItems.get(0);
-
-                if (newQuantity > 0) {
-                    basketItem.setQuantity(newQuantity);
-                } else {
-
-                    hibernateSession.beginTransaction();
-                    hibernateSession.delete(basketItem);
-                    hibernateSession.getTransaction().commit();
-                }
-            }
-        }
     }
 
 }
