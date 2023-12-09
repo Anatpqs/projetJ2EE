@@ -33,6 +33,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="HomeController">Home </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="ProductListController?name=&idCategory=0">Search </a>
+            </li>
             <%if(connected==null){%>
             <li class="nav-item">
                 <a class="nav-link" href="inscription.jsp">Sign up </a>
