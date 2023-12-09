@@ -19,6 +19,15 @@ public class BasketDAO {
         }
     }
 
+    public Basket getBasketById(int basketId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Basket.class, basketId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void updateBasket(Basket basket) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -50,6 +59,19 @@ public class BasketDAO {
             query.executeUpdate();
         } catch (Exception e) {
             // Gérer les exceptions (log, throw, etc.) selon les besoins de votre application
+            e.printStackTrace();
+        }
+    }
+
+    public void RemoveBasketsById(int basketId){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Basket basket = session.get(Basket.class, basketId);
+            if (basket != null) {
+                session.delete(basket);
+            }
+            transaction.commit();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
