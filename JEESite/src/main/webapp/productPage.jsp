@@ -34,13 +34,15 @@
             <!-- Options -->
             <div class="mt-4 lg:row-span-3 lg:mt-0">
                 <h2 class="sr-only">Product information</h2>
-                <p class="text-3xl tracking-tight text-gray-900"><%= product.getUnitPrice() %> €</p>
+                <p class="text-3xl tracking-tight text-gray-900"><%= product.getUnitPrice() %> Euro</p>
 
 
+                <%if(connected!=null){%>
                 <form method="post" action="BasketController">
                     <input type="hidden" name="productId" value="<%= product.getIdProduct() %>">
                     <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-700 px-8 py-3 text-base font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">Add to Bag</button>
                 </form>
+                <%}%>
             </div>
 
             <div class="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
