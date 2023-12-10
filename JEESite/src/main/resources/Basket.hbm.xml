@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="Entity.Basket" table="basket" schema="mydb">
+        <id name="idBasket">
+            <column name="idBasket" sql-type="int"/>
+        </id>
+        <property name="idProduct">
+            <column name="idProduct" sql-type="int"/>
+        </property>
+        <property name="idUser">
+            <column name="idUser" sql-type="int"/>
+        </property>
+        <property name="quantity">
+            <column name="quantity" sql-type="int"/>
+        </property>
+    </class>
+</hibernate-mapping>
