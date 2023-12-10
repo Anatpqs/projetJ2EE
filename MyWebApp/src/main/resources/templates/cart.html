@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<div>
+    <h2>Your Cart:</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Description</th>
+            <th>Action</th>
+            <!-- Add more columns if needed -->
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iterate over cart items and display them -->
+        <tr th:each="cartItem : ${user.cartItems}">
+            <td th:text="${cartItem.product.name}"></td>
+            <td th:text="${cartItem.product.price}"></td>
+            <td th:text="${cartItem.quantity}"></td>
+            <!-- Calculate total price for the product based on quantity -->
+            <td th:text="${cartItem.product.price * cartItem.quantity}"></td>
+            <td th:text="${cartItem.product.description}"></td>
+            <td>
+                <!-- Add Remove button with form -->
+                <form th:action="@{/removeFromCart}" method="post">
+                    <input type="hidden" name="productId" th:value="${cartItem.product.id}" />
+                    <button type="submit" class="btn btn-danger">Remove</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Add Checkout button -->
+    <form th:action="@{/payment}" method="post">
+        <button type="submit" class="btn btn-primary">Payment</button>
+    </form>
+</div>
+
+<a th:href="@{/homeLogin}" class="btn btn-secondary">Back to Home</a>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${pageTitle}]]</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container-fluid text-center">
+    <div class="text-center"><h2>[[${pageTitle}]]</h2></div>
+
+    <form th:action="@{/admin/products/save}" method="post" th:object="${products}"
+          style="max-width: 500px; margin: 0 auto" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{id}">
+        <div class="border border-secondary rounded p-3">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" required th:field="*{name}" name="name" id="name"
+                       placeholder="Enter name">
+
+            </div>
+            <div class="form-group">
+                <label for="category">Select Category</label>
+                <select class="form-control" th:field="*{categories}" id="category" name="category">
+                    <option th:each="category :${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}"
+                    >
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" class="form-control" required th:field="*{price}" name="price" id="price"
+                       placeholder="Price">
+            </div>
+            <div class="form-group">
+                <label for="weight">Weight in grams</label>
+                <input type="number" class="form-control" required th:field="*{weight}" name="weight" id="weight"
+                       placeholder="Weight">
+            </div>
+            <div class="form-group">
+                <label for="description">Product Description</label>
+                <textarea class="form-control" rows="5" th:field="*{description}" name="description" id="description"></textarea>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary m-2">Save</button>
+                <button type="button" class="btn border-secondary m-2" onclick="cancelForm()">Cancel</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<script type="text/javascript">
+    function cancelForm() {
+        window.location = "[[@{/admin/products}]]";
+    }
+    function previewImage(input) {
+        var preview = document.getElementById('image-preview');
+        var file = input.files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+            preview.style.display = 'block';
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '';
+            preview.style.display = 'none';
+        }
+    }
+</script>
+</body>
+</html>
