@@ -52,7 +52,7 @@ public class SignUpServlet extends HttpServlet {
             int IdUser = ((Integer) session.createNativeQuery("SELECT IdUser FROM user ORDER BY IdUser DESC LIMIT 1").uniqueResult());
 
             EmailTest email = new EmailTest();
-            email.sendConfirmationEmail(mail, "http://localhost:8080/JEESite_war_exploded/confirmation?IdUser=" + IdUser);
+            email.sendConfirmationEmail(mail, "Confirmation de votre compte", "Bienvenue sur notre site! Pour confirmer votre compte, veuillez cliquer sur le lien suivant:\n\n"+"http://localhost:8080/JEESite_war_exploded/confirmation?IdUser=" + IdUser);
 
             String messageReturn ="Your account has been created, to validate it a confirmation email has been sent to you";
 
