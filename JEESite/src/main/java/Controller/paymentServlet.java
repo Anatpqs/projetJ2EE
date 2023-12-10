@@ -1,9 +1,6 @@
 package Controller;
 
-import Entity.Basket;
-import Entity.Command;
-import Entity.CommandLine;
-import Entity.HibernateUtil;
+import Entity.*;
 import dao.BasketDAO;
 import dao.CommandDAO;
 import dao.UserDAO;
@@ -12,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
