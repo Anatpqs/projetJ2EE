@@ -8,12 +8,25 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/mydb</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">cytech0001</property>
-
-        <!-- Dialecte SQL -->
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
 
         <!-- Mapping des entités -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <mapping resource="Command.hbm.xml"/>
+        <mapping class="Entity.Command"/>
+        <mapping resource="CommandLine.hbm.xml"/>
+        <mapping class="Entity.CommandLine"/>
+        <mapping resource="User.hbm.xml"/>
+        <mapping class="Entity.User"/>
+        <mapping resource="Product.hbm.xml"/>
+        <mapping class="Entity.Product"/>
+        <mapping resource="Category.hbm.xml"/>
+        <mapping class="Entity.Category"/>
+        <mapping class="Entity.Basket"/>
+        <mapping resource="Basket.hbm.xml"/>
+
 
     </session-factory>
 
