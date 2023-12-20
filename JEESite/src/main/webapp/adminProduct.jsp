@@ -1,6 +1,7 @@
 
 <%@ page import="java.util.List" %>
-<%@ page import="Entity.Product" %><%--
+<%@ page import="Entity.Product" %>
+<%@ page import="Entity.Category" %><%--
   Created by IntelliJ IDEA.
   User: CYTech Student
   Date: 13/11/2023
